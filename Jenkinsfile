@@ -22,9 +22,12 @@ pipeline {
 
   stages {
     stage("Parameterizing") {
+      when {
+        expression {
+          return params.autoDeploy == true;
+        }
+      }
       steps {
-        script {
-          if ("${params.dryRun}" == true) {
             echo 'Dry run completed. Job parameters were imported. Please set them to the correct values at the Project Configuration UI.'
             currentBuild.result = 'SUCCESS'
           }
