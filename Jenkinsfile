@@ -5,9 +5,10 @@ pipeline {
   parameters {
     booleanParam(name: 'dryRun', defaultValue: params.dryRun ?: true, description: 'Would you like to perform a dry run? [Is used to import parameters when the Pipeline is running for the first time]')
     string(name: 'dockerRegistry', defaultValue: params.dockerRegistry ?: 'registry.hub.docker.com', description: 'DockerHub registry, which will be used in this build.')
-    string(name: 'dockerhubRepo', defaultValue: params.dockerhubRepo ?: 'tandrews9/jenkinsplusdocker', description: 'DockerHub repo on the registry, where image will be pushed.')
+    string(name: 'dockerhubRepo', defaultValue: params.dockerhubRepo ?: ' ', description: 'DockerHub repo on the registry, where image will be pushed.')
+    string(name: 'imageTag', defaultValue: params.imageTag ?: ' ', description: 'Image tag that will be pushed.')
     string(name: 'gitCreds', defaultValue: params.gitCreds ?: 'jenkins-machine-ssh-key', description: 'GitHub credentials stored in Jenkins UI')
-    string(name: 'dockerRegCred', defaultValue: params.dockerRegCred ?: 'tandrews9-dockerhub-api-token', description: 'Docker Registry credentials stored in Jenkins UI.')
+    string(name: 'dockerRegCred', defaultValue: params.dockerRegCred ?: ' ', description: 'Docker Registry credentials stored in Jenkins UI.')
     string(name: 'publishPorts', defaultValue: params.publishPorts ?: ' ', description: 'Ports to be published by a docker container. Potentially dangerous, therefore left blank. Use reverse proxy, e.g. Nginx, to secure the installation.')
     string(name: 'volumesMount', defaultValue: params.volumesMount ?: '-v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock', description: 'Volumes to be mounted by a docker container when deploying.')
     string(name: 'containersNetwork', defaultValue: params.containersNetwork ?: ' ', description: 'Internal Docker network name, on which docker container will run')
@@ -41,8 +42,7 @@ pipeline {
       steps {
           script {
             docker.withRegistry("https://${params.dockerRegistry}", "${params.dockerRegCred}") {
-              DOCKER_IMAGE.push("${BUILD_NUMBER}")
-              DOCKER_IMAGE.push("latest")
+              DOCKER_IMAGE.push("${params.imageTag}")
             }
           }
       }
