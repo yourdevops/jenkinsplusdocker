@@ -30,7 +30,8 @@ pipeline {
       steps {
         echo 'Dry run completed. Job parameters were imported. Please set them to the correct values at the Project Configuration UI.'
         script {
-          currentBuild.result = 'SUCCESS'
+          currentBuild.getRawBuild().getExecutor().interrupt(Result.SUCCESS)
+          sleep(1)   // Interrupt is not blocking and does not take effect immediately.
         }
       }
     }
