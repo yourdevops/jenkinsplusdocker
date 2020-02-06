@@ -20,7 +20,13 @@ pipeline {
     SSH_DEPLOY = "docker run -d --restart unless-stopped ${params.publishPorts} ${params.volumesMount} ${params.containersNetwork} --name ${JOB_BASE_NAME} ${params.dockerRegistry}/${params.dockerhubRepo}:${BUILD_NUMBER}"
   }
 
+if( ${params.dryRun} == true ) {
+   currentBuild.result = 'SUCCESS'
+   return
+}
+
   stages {
+/*
     stage("Parameterizing") {
       when {
         expression {
@@ -35,6 +41,7 @@ pipeline {
         }
       }
     }
+  */
     stage('Build image') {
       steps {
         script {
