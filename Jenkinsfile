@@ -3,6 +3,7 @@ pipeline {
   agent any
 
   parameters {
+    booleanParam(name: 'dryRun', defaultValue: params.dryRun ?: true, description: 'Would you like to perform a dry run? [Is used to import parameters when the Pipeline is running for the first time]')
     string(name: 'dockerRegistry', defaultValue: params.dockerRegistry ?: 'registry.hub.docker.com', description: 'DockerHub registry, which will be used in this build.')
     string(name: 'dockerhubRepo', defaultValue: params.dockerhubRepo ?: 'tandrews9/jenkinsplusdocker', description: 'DockerHub repo on the registry, where image will be pushed.')
     string(name: 'gitCreds', defaultValue: params.gitCreds ?: 'jenkins-machine-ssh-key', description: 'GitHub credentials stored in Jenkins UI')
@@ -19,6 +20,16 @@ pipeline {
   }
 
   stages {
+    stage("Parameterizing") {
+      steps {
+        script {
+          if ("${params.dryRun}" == true) {
+            echo 'Dry run completed. Job parameters were imported. Please set them to the correct values at the Project Configuration UI.'
+            currentBuild.result = 'SUCCESS'
+          }
+        }
+      }
+    }
     stage('Build image') {
       steps {
         script {
