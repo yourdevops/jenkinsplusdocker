@@ -20,13 +20,7 @@ pipeline {
     SSH_DEPLOY = "docker run -d --restart unless-stopped ${params.publishPorts} ${params.volumesMount} ${params.containersNetwork} --name ${JOB_BASE_NAME} ${params.dockerRegistry}/${params.dockerhubRepo}:${BUILD_NUMBER}"
   }
 
-if( ${params.dryRun} == true ) {
-   currentBuild.result = 'SUCCESS'
-   return
-}
-
   stages {
-/*
     stage("Parameterizing") {
       when {
         expression {
@@ -36,12 +30,10 @@ if( ${params.dryRun} == true ) {
       steps {
         echo 'Dry run completed. Job parameters were imported. Please set them to the correct values at the Project Configuration UI.'
         script {
-          currentBuild.getRawBuild().getExecutor().interrupt(Result.SUCCESS)
-          sleep(1)   // Interrupt is not blocking and does not take effect immediately.
+          currentBuild.result = 'ABORTED'
         }
       }
     }
-  */
     stage('Build image') {
       steps {
         script {
