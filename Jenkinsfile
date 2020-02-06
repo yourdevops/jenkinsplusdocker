@@ -24,7 +24,7 @@ pipeline {
     stage("Parameterizing") {
       when {
         expression {
-          return params.autoDeploy == true;
+          return params.dryRun == true;
         }
       }
       steps {
