@@ -6,4 +6,9 @@ docker container run -d --name jenkins -v /var/run/docker.sock:/var/run/docker.s
 
 Jenkinsfile here features a parametrized build with persistance of changes made in Job Parameters from Jenkins UI.
 
-To be updated...
+Upd:
+Implemented the parameters invocation mechanism in the Jenkins Pipeline.
+It imports parameters from the pipeline, then aborts the first build.
+The second build must be triggered manually with populating the parameters values, and un-setting **dryRun** parameter.
+
+To be updated soon.
