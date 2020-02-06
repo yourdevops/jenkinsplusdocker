@@ -3,7 +3,7 @@ pipeline {
   agent any
 
   parameters {
-    booleanParam(name: 'dryRun', defaultValue: params.dryRun ?: true, description: 'Would you like to perform a dry run? [Is used to import parameters when the Pipeline is running for the first time]')
+    booleanParam(name: 'dryRun', defaultValue: params.dryRun ?: true, description: '[WARNING] Enabling this option will abort the job after the first step, and is used only to import parameters when the Pipeline is running for the first time.')
     string(name: 'dockerRegistry', defaultValue: params.dockerRegistry ?: 'registry.hub.docker.com', description: 'DockerHub registry, which will be used in this build.')
     string(name: 'dockerhubRepo', defaultValue: params.dockerhubRepo ?: ' ', description: 'DockerHub repo on the registry, where image will be pushed.')
     string(name: 'imageTag', defaultValue: params.imageTag ?: ' ', description: 'Image tag that will be pushed.')
