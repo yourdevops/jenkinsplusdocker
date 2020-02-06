@@ -30,8 +30,6 @@ pipeline {
       steps {
             echo 'Dry run completed. Job parameters were imported. Please set them to the correct values at the Project Configuration UI.'
             currentBuild.result = 'SUCCESS'
-          }
-        }
       }
     }
     stage('Build image') {
