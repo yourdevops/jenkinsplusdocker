@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:latest
 # dockerVersion is now set in DockerHub Builds
 # ARG dockerVersion=19.03.12 
 # ARG dockerComposeVersion=1.26.2
