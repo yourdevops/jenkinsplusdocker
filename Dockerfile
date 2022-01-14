@@ -12,3 +12,4 @@ RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-$do
    && chmod +x /usr/local/bin/docker-compose /usr/bin/docker \
    && groupadd docker \
    && usermod -aG docker jenkins
+USER jenkins
