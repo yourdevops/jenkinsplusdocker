@@ -10,6 +10,6 @@ USER root
 RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-$dockerVersion.tgz | tar zxvf - --strip 1 -C /usr/bin docker/docker \
    && curl -L "https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
    && chmod +x /usr/local/bin/docker-compose /usr/bin/docker \
-   && groupadd docker \
+   && groupadd -g 999 docker \
    && usermod -aG docker jenkins
 USER jenkins
